@@ -11,6 +11,21 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+firebase.database().ref('Test').once('value', (snap) => {
+    console.log(snap.val());
+
+    document.getElementById("Do").value = snap.val().Do;
+    document.getElementById("Hp").value = snap.val().Hp;
+    document.getElementById("ความขุ่น").value = snap.val().ความขุ่น;
+    document.getElementById("Pump").value = snap.val().Pump;
+
+});
+
+function Save2Firebase() {
+    var NumPath = firebase.database().ref("Number");
+    NumPath.child('number1').set(8888);
+}
+
 //Get
 // var ref = firebase.database().ref('Datalog');
 // ref.on('value', gotData, errdata);
@@ -30,34 +45,3 @@ firebase.analytics();
 //     console.log('Error!');
 //     console.log(err);
 // }
-
-firebase.database().ref('DataLog').once('value', (snap) => {
-    console.log(snap.val());
-});
-
-firebase.database().ref('Number').once('value', (snap) => {
-    console.log(snap.val());
-    document.getElementById("demo1").innerHTML = snap.val().number1;
-    document.getElementById("demo2").innerHTML = snap.val().number2;
-    document.getElementById("demo3").innerHTML = snap.val().number3;
-    document.getElementById("demo4").innerHTML = snap.val().number4;
-});
-
-// JSON
-// const dbRefObject = firebase.database().ref().child('DataLog');
-
-// dbRefObject.on('value', (snap) =>{
-//     dbRefObject.innerHTML = JSON.stringify(snap.val(), null, 3);
-// });
-
-//Total
-//   firebase.database().ref('Number').on('value',(snap)=>{
-//     var totalRecord =  snap.numChildren();
-//     console.log("Total Record : "+totalRecord);
-//   });
-
-// set
-// var [Varilable] = firebase.database().ref("[name]");
-// [Varilable1].child("[path/path/...]").set("[value1]")
-// [Varilable2].child("[path/path/...]").set("[value2]")
-// .... [n] value set/push/...
